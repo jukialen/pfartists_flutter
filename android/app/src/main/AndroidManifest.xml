@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.local.pfartists.pfartists_local">
    <application
-        android:label="pfartists_local"
+        android:label="Pfartists"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
