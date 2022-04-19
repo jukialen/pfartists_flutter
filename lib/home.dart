@@ -8,19 +8,8 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const PlatformApp(
-      title: 'Home screen',
-      // theme: ThemeData(
-      //   // This is the theme of your application.
-      //   //
-      //   // Try running your application with "flutter run". You'll see the
-      //   // application has a blue toolbar. Then, without quitting the app, try
-      //   // changing the primarySwatch below to Colors.green and then invoke
-      //   // "hot reload" (press "r" in the console where you ran "flutter run",
-      //   // or simply save your changes to "hot reload" in a Flutter IDE).
-      //   // Notice that the counter didn't reset back to zero; the application
-      //   // is not restarted.
-      //   primarySwatch: Colors.blue,
-      // ),
+      title: 'Home',
+      color: Color.fromARGB(33, 33, 33, 1),
       home: MyHomePage(title: 'Home'),
     );
   }
@@ -41,7 +30,7 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -54,27 +43,222 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return PlatformScaffold(
-        appBar: PlatformAppBar(),
-        body: const Text('ddsds'),
-        bottomNavBar: PlatformNavBar(),
+        appBar: PlatformAppBar(
+          backgroundColor: const Color.fromRGBO(255, 199, 79, 1),
+          title: Text(
+            widget.title,
+            style: const TextStyle(
+                color: Color.fromRGBO(51, 51, 51, 1), fontSize: 25),
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(43, 143, 161, 1),
+        body: const CustomCard(),
+        bottomNavBar: PlatformNavBar(
+          backgroundColor: const Color.fromRGBO(79, 141, 255, 1),
+          items: [
+            BottomNavigationBarItem(
+              backgroundColor: const Color.fromARGB(33, 33, 33, 1),
+              icon: Icon(
+                PlatformIcons(context).home,
+                color: Colors.black,
+                size: 25,
+              ),
+              label: 'Home',
+              tooltip: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(PlatformIcons(context).groupSolid,
+                  color: Colors.black, size: 25),
+              label: 'Groups',
+              tooltip: 'Groups',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(PlatformIcons(context).addCircledSolid,
+                  color: Colors.black, size: 25),
+              label: 'Add a file',
+              tooltip: 'Add a file',
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(PlatformIcons(context).settings,
+                    color: Colors.black, size: 25),
+                label: 'Settings',
+                backgroundColor: Colors.black),
+            BottomNavigationBarItem(
+                icon: Icon(PlatformIcons(context).settings,
+                    color: Colors.black, size: 25),
+                label: 'Settings',
+                tooltip: 'Settings',
+                backgroundColor: Colors.black),
+          ],
+        ),
         iosContentPadding: false,
         iosContentBottomPadding: false);
   }
 }
 
-Widget _buildContent() {
-  return  Row(
-      children: const <Widget>[
-        Text('ddsds'),
-        Text('sssss'),
-      ],
-    );
-}
-
+// Widget _buildContent() {
+//   return const CustomCard();
+// }
 
 class CustomCard extends StatelessWidget {
   const CustomCard({
     Key? key,
   }) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Center(
+          child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            child: PlatformText(
+              'Last Photos',
+              style: const TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 40,
+              ),
+            ),
+          ),
+          const FileContainer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            child: PlatformText(
+              'Last Drawings',
+              style: const TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 40,
+              ),
+            ),
+          ),
+          const FileContainer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            child: PlatformText(
+              'Last Animations',
+              style: const TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 40,
+              ),
+            ),
+          ),
+          const FileContainer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            child: PlatformText(
+              'Last Videos',
+              style: const TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 40,
+              ),
+            ),
+          ),
+          const FileContainer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            child: PlatformText(
+              'Last Others',
+              style: const TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 40,
+              ),
+            ),
+          ),
+          const FileContainer(),
+        ],
+      )),
+    );
+  }
+}
+
+class FileContainer extends StatefulWidget {
+  const FileContainer({Key? key}) : super(key: key);
+
+  @override
+  _FileContainerState createState() => _FileContainerState();
+}
+
+class _FileContainerState extends State<FileContainer>{
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 20),
+      height: 480,
+      child: ListView(
+        // This next line does the trick.
+        scrollDirection: Axis.horizontal,
+        children: const <Widget>[
+          Article(),
+          Article(),
+          Article(),
+          Article(),
+          Article(),
+          Article(),
+          Article(),
+          Article(),
+          Article(),
+          Article(),
+        ],
+      ),
+    );
+  }
+}
+
+
+class Article extends StatefulWidget {
+  const Article({Key? key}) : super(key: key);
+
+  @override
+  State<Article> createState() => _ArticleState();
+}
+
+class _ArticleState extends State<Article> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350,
+      height: 350,
+      color: Colors.red,
+      child: Column(
+        children: [
+          Image.network(
+            'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
+          ),
+          Row(children: [
+            Container(
+              width: 310,
+              // height: 40,
+              margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
+              padding: const EdgeInsets.all(8),
+              child: const Text(
+                "Pseudonym",
+                style: TextStyle(fontSize: 22),
+              ),
+              color: Colors.teal,
+            ),
+            Container(
+              width: 20,
+              height: 10,
+              padding: const EdgeInsets.all(8),
+              child: Icon(PlatformIcons(context).back),
+              color: Colors.teal,
+            ),
+          ]),
+          PlatformTextButton(
+            onPressed: () =>
+                PlatformAlertDialog(title: const Text('Comments section')),
+            child: PlatformText(
+              'Comments section',
+              style: const TextStyle(
+                fontSize: 22,
+                color: Colors.black,
+                backgroundColor: Colors.blueAccent,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:pfartists/home.dart';
+import 'package:pfartists/Forms/create.dart';
+import 'package:pfartists/Forms/login.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -12,8 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const PlatformApp(
-      title: 'Pfartists',
-      home: Home(),
+      initialRoute: '/',
+      routes: <String, WidgetBuilder> {
+        '/': (BuildContext context) => Home(),
+        '/login': (BuildContext context) => Login(),
+        '/create': (BuildContext context) => Create(),
+      },
     //   theme: ThemeData(
     //     // This is the theme of your application.
     //     //
@@ -26,7 +32,6 @@ class MyApp extends StatelessWidget {
     //     // is not restarted.
     //     primarySwatch: Colors.blue,
     //   ),
-    //   home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
