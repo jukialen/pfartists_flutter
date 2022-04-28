@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ConsentExpression extends StatelessWidget {
   const ConsentExpression({Key? key}) : super(key: key);
@@ -36,8 +36,8 @@ class ConsentExpression extends StatelessWidget {
                 recognizer: TapGestureRecognizer()
                   ..onTap = () async {
                     String url = _linkTerms;
-                    await canLaunch(url)
-                        ? await launch(url)
+                    await canLaunchUrlString(url)
+                        ? await launchUrlString(url)
                         : throw 'Could not launch $url';
                   }),
             const TextSpan(style: _footerText, text: " and "),
@@ -48,8 +48,8 @@ class ConsentExpression extends StatelessWidget {
               recognizer: TapGestureRecognizer()
                 ..onTap = () async {
                   String url = _linkConditions;
-                  await canLaunch(url)
-                      ? await launch(url)
+                  await canLaunchUrlString(url)
+                      ? await launchUrlString(url)
                       : throw 'Could not launch $url';
                 },
             ),

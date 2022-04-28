@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'package:pfartists/Forms/login.dart';
@@ -273,7 +272,7 @@ class _VerMainBodyFormState extends State<VerMainBodyForm> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           child: PlatformTextFormField(
             validator: (String? value) {
               if (value == null || value.isEmpty) {
@@ -341,7 +340,8 @@ class _CreateBodyFormState extends State<CreateBodyForm> {
   Widget build(BuildContext context) {
     String? _email;
     String? _password;
-    String? _formState;
+    String? _formEmailState;
+    String? _formPassState;
 
     void _submit() {
       final form = widget.formKey.currentState;
@@ -362,7 +362,8 @@ class _CreateBodyFormState extends State<CreateBodyForm> {
             builder: (BuildContext context) {
               return PlatformAlertDialog(
                 title: const Text('Form error'),
-                content: Text('formState: $_formState'),
+                content: Text(
+                    'formEmailState: $_formEmailState, formPassState: $_formPassState'),
               );
             });
       }
@@ -398,13 +399,17 @@ class _CreateBodyFormState extends State<CreateBodyForm> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: PlatformTextFormField(
             validator: (String? value) {
-              if (value?.contains('@') != false) {
-                _formState = 'Not a valid email.';
-              } else if (value == null || value.isEmpty) {
-                _formState = 'Please enter some text';
+              RegExp regexEmail =
+                  RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
+              if (value == null || value.isEmpty) {
+                _formEmailState = 'Please enter some text';
+              } else if (!regexEmail.hasMatch(value)) {
+                _formEmailState = 'Not a valid email.';
               }
-              return _formState;
+              return _formEmailState;
             },
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: TextInputType.emailAddress,
             material: (_, __) => MaterialTextFormFieldData(
               decoration: const InputDecoration(
@@ -426,10 +431,30 @@ class _CreateBodyFormState extends State<CreateBodyForm> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: PlatformTextFormField(
             validator: (String? value) {
+              RegExp regexPasswordOl = RegExp(r'/[A-Z]/g');
+              RegExp regexPasswordHKik =
+                  RegExp(r'/[a-ząćęłńóśźżĄĘŁŃÓŚŹŻぁ-んァ-ヾ一-龯]*/g');
+              RegExp regexPasswordOn = RegExp(r'/[0-9]+/g');
+              RegExp regexPasswordSpec = RegExp(r'/[#?!@%^&*-]+/g');
+
               if (value == null || value.isEmpty) {
-                _formState = 'Please enter password';
+                _formPassState = 'Please enter password';
+              } else if (!regexPasswordOl.hasMatch(value)) {
+                _formPassState =
+                    'Hasło musi zawierać conajmniej jedną dużą literę.';
+              } else if (!regexPasswordHKik.hasMatch(value)) {
+                _formPassState =
+                    'Hasło przyjmuje tylko litery. Mogą to być znaki Hiragany, Katakany i kanji.';
+              } else if (!regexPasswordOn.hasMatch(value)) {
+                _formPassState = 'Hasło musi mieć conajmniej 1 cyfrę.';
+              } else if (!regexPasswordSpec.hasMatch(value)) {
+                _formPassState =
+                    'Hasło musi zawierać conajmniej 1 znak specjalny: #?!@%^&*-';
+              } else if (value.length < 9) {
+                _formPassState =
+                    'Hasło jest za krótkie. Musi mieć minimum 9 znaków.';
               }
-              return _formState;
+              return _formPassState;
             },
             obscureText: true,
             material: (_, __) => MaterialTextFormFieldData(
@@ -462,7 +487,6 @@ class _CreateBodyFormState extends State<CreateBodyForm> {
             ),
           ),
         ),
-        Text(dotenv.env['ANDROID_API_KEY']!)
       ],
     );
   }

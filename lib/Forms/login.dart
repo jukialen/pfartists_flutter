@@ -44,7 +44,6 @@ class _LoginFormState extends State<LoginForm> {
       body: Center(
         child: Form(
           key: formKey,
-          autovalidateMode: AutovalidateMode.always,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,10 +92,10 @@ class _LoginFormState extends State<LoginForm> {
 class LoginBodyForm extends StatefulWidget {
   const LoginBodyForm(
       {Key? key,
-        required this.title,
-        required this.subTitle,
-        required this.otherForm,
-        required this.formKey})
+      required this.title,
+      required this.subTitle,
+      required this.otherForm,
+      required this.formKey})
       : super(key: key);
 
   final String title;
@@ -113,7 +112,8 @@ class _LoginBodyFormState extends State<LoginBodyForm> {
   Widget build(BuildContext context) {
     String? _email;
     String? _password;
-    String? _formState;
+    String? _formEmailState;
+    String? _formPassState;
 
     void _submit() {
       final form = widget.formKey.currentState;
@@ -134,7 +134,7 @@ class _LoginBodyFormState extends State<LoginBodyForm> {
             builder: (BuildContext context) {
               return PlatformAlertDialog(
                 title: const Text('Form error'),
-                content: Text('formState: $_formState'),
+                content: Text('formEmailState: $_formEmailState, formPassState: $_formPassState'),
               );
             });
       }
@@ -170,13 +170,15 @@ class _LoginBodyFormState extends State<LoginBodyForm> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: PlatformTextFormField(
             validator: (String? value) {
-              if (value?.contains('@') != false) {
-                _formState = 'Not a valid email.';
-              } else if (value == null || value.isEmpty) {
-                _formState = 'Please enter some text';
+              RegExp regexEmail = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
+              if (value == null || value.isEmpty) {
+                return _formEmailState = 'Please enter e-mail';
+              } else if (!regexEmail.hasMatch(value)) {
+                return _formEmailState = 'Not a valid email.';
               }
-              return _formState;
             },
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: TextInputType.emailAddress,
             material: (_, __) => MaterialTextFormFieldData(
               decoration: const InputDecoration(
@@ -198,12 +200,31 @@ class _LoginBodyFormState extends State<LoginBodyForm> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: PlatformTextFormField(
             validator: (String? value) {
+              RegExp regexPasswordOl = RegExp(r'/[A-Z]/g');
+              RegExp regexPasswordHKik = RegExp(r'/[a-ząćęłńóśźżĄĘŁŃÓŚŹŻぁ-んァ-ヾ一-龯]*/g');
+              RegExp regexPasswordOn = RegExp(r'/[0-9]+/g');
+              RegExp regexPasswordSpec = RegExp(r'/[#?!@%^&*-]+/g');
+
               if (value == null || value.isEmpty) {
-                _formState = 'Please enter password';
+                return _formPassState = 'Please enter password';
+              } else if (!regexPasswordOl.hasMatch(value)) {
+                return _formPassState =
+                    'Hasło musi zawierać conajmniej jedną dużą literę.';
+              } else if (!regexPasswordHKik.hasMatch(value)) {
+                return _formPassState =
+                    'Hasło przyjmuje tylko litery. Mogą to być znaki Hiragany, Katakany i kanji.';
+              } else if (!regexPasswordOn.hasMatch(value)) {
+                return _formPassState = 'Hasło musi mieć conajmniej 1 cyfrę.';
+              } else if (!regexPasswordSpec.hasMatch(value)) {
+                return _formPassState =
+                    'Hasło musi zawierać conajmniej 1 znak specjalny: #?!@%^&*-';
+              } else if (value.length < 9) {
+                return _formPassState =
+                    'Hasło jest za krótkie. Musi mieć minimum 9 znaków.';
               }
-              return _formState;
             },
             obscureText: true,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             material: (_, __) => MaterialTextFormFieldData(
               decoration: const InputDecoration(
                 labelText: 'Password',
