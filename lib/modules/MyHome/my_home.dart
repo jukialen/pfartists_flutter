@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pfartists_flutter/modules/Home/home.dart';
 import 'package:pfartists_flutter/modules/Profile/profile.dart';
-import 'package:pfartists_flutter/modules/Search/Search.dart';
+import 'package:pfartists_flutter/modules/Search/search.dart';
 // import 'providers.dart';
 
 // Provider przechowujący wybrany indeks zakładki

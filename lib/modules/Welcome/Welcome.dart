@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/cupertino.dart';
-import 'package:pfartists_flutter/modules/Login/Login.dart';
+import 'package:pfartists_flutter/modules/Login/login.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
@@ -9,34 +9,32 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      // navigationBar: CupertinoNavigationBar(
-      //   middle: Text('Nazwa Aplikacji'),
-      // ),
       child: SafeArea(
-        child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 40),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,            
             children: [
-              Column(
-                children: [
-                  Text(
-                    'Nazwa Aplikacji',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Pfartists',
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Witamy artystów! Ciesz się tworzeniem i dziel się swoją sztuką.',
-                    style: TextStyle(
-                      fontSize: 18,
+                    SizedBox(height: 50),
+                    Text(
+                      'Witamy artystów! Ciesz się tworzeniem i dziel się swoją sztuką.',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+                  ],
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +59,6 @@ class Welcome extends StatelessWidget {
             ],
           ),
         ),
-      ),
       ),
     );
   }
