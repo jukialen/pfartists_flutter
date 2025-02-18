@@ -3,6 +3,7 @@ CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
 Makefile
+CTestTestfile.cmake
 
 # Build directories
 build/
@@ -17,6 +18,14 @@ lib/
 *.bak
 *.tmp
 *.log
+.cxx
+*.o
+*.obj
+*.so
+*.a
+*.dylib
+*.dll
+*.exe
 
 # Miscellaneous
 *.class
