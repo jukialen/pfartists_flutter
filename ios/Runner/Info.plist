@@ -2,29 +2,35 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>CFBundleName</key>
+    <string>pfartists_flutter</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.jukialen.pfartists_flutter</string>
+    <key>CFBundleExecutable</key>
+    <string>Runner</string>
+    <key>CFBundleVersion</key>
+    <string>1.0.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>com.googleusercontent.apps.503121268891-7dah85bbsbpkouv16t9o8dbhjv85oas5</string>
+                <string>com.googleusercontent.apps.503121268891-58i3j2gt933cadbk3eig3jar0qqor54c</string>
+            </array>
+        </dict>
+    </array>
+    <key>keychain-access-groups</key>
+    <array>
+        <string>com.googleusercontent.apps.503121268891-7dah85bbsbpkouv16t9o8dbhjv85oas5</string>
+    </array>
+    <!-- Other keys and values -->
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>CFBundleExecutable</key>
-	<string>Runner</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleName</key>
-	<string>pfartists_flutter</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.503121268891-7dah85bbsbpkouv16t9o8dbhjv85oas5</string>
-			</array>
-		</dict>
-	</array>
-	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>

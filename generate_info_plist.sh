@@ -34,8 +34,13 @@ cat <<EOF > ios/Runner/Info.plist
             <key>CFBundleURLSchemes</key>
             <array>
                 <string>$REVERSED_CLIENT_ID</string>
+                <string>com.googleusercontent.apps.503121268891-58i3j2gt933cadbk3eig3jar0qqor54c</string>
             </array>
         </dict>
+    </array>
+    <key>keychain-access-groups</key>
+    <array>
+        <string>$REVERSED_CLIENT_ID</string>
     </array>
     <!-- Other keys and values -->
 </dict>
