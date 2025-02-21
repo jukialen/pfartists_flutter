@@ -1,21 +1,61 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'
-    show ConsumerWidget, StateProvider, WidgetRef;
-import 'package:pfartists_flutter/constants/providers.dart';
-import 'package:pfartists_flutter/utils/login_with_google.dart';
-// import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-import 'package:pfartists_flutter/utils/supabase.dart';
+import 'package:pfartists_flutter/constants/providers.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:pfartists_flutter/utils/supabase.dart';
+
+import 'package:pfartists_flutter/modules/ForgottenPassword/forgotten_password.dart';
+import 'package:pfartists_flutter/modules/Create/create.dart';
+
+import 'package:pfartists_flutter/shared/ProvidersOptions/providers_options.dart';
 
 final emailProvider = StateProvider<String>((ref) => '');
 final passwordProvider = StateProvider<String>((ref) => '');
 final errorLogin = StateProvider<bool>((ref) => false);
 
-class Login extends ConsumerWidget {
+class Login extends StatelessWidget {
   const Login({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return PlatformScaffold(
+      appBar: PlatformAppBar(
+        title: PlatformText(
+          'Login',
+          style: TextStyle(color: Color.fromARGB(255, 28, 31, 40)),
+        ),
+        leading: PlatformIconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          materialIcon: Icon(
+            Icons.arrow_back,
+            color: Color.fromARGB(255, 28, 31, 40),
+          ),
+          cupertinoIcon: Icon(
+            CupertinoIcons.arrow_left,
+            size: 28.0,
+          ),
+        ),
+        // trailingActions: <Widget>[
+        //   PlatformIconButton(),
+        // ],
+        backgroundColor: Color(0xFFFFD068),
+      ),
+      body: LoginBody(),
+      // bottomNavBar: PlatformNavBar(),
+      iosContentPadding: false,
+      iosContentBottomPadding: false,
+    );
+  }
+}
+
+class LoginBody extends ConsumerWidget {
+  const LoginBody({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final email = ref.watch(emailProvider);
@@ -37,85 +77,56 @@ class Login extends ConsumerWidget {
       }
     }
 
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Login'),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CupertinoTextField(
-              placeholder: 'Email',
-              onChanged: (value) =>
-                  ref.read(emailProvider.notifier).state = value,
-            ),
-            SizedBox(height: 16),
-            CupertinoTextField(
-              placeholder: 'Password',
-              obscureText: true,
-              onChanged: (value) =>
-                  ref.read(passwordProvider.notifier).state = value,
-            ),
-            SizedBox(height: 16),
-            CupertinoButton.filled(
-              child: Text('Login'),
-              onPressed: () {
-                login();
-              },
-            ),
-            SizedBox(height: 16),
-            if (ref.watch(errorLogin)) Text('Invalid email or password'),
-            CupertinoButton(
-              child: Text('Login with Google'),
-              onPressed: () async {
-                googleUser();
-              },
-            ),
-            CupertinoButton(
-              child: Text('Login with Discord'),
-              onPressed: () {
-                // Handle Discord login logic
-              },
-            ),
-            CupertinoButton(
-              child: Text('Login with Spotify'),
-              onPressed: () {
-// () async {await supabase.auth.signInWithOAuth(
-//   OAuthProvider.spotify,
-//   authScreenLaunchMode: LaunchMode.inAppWebView,
-// );}
-              },
-            ),
-            SizedBox(height: 16),
-            CupertinoButton(
-              child: Text('Forgotten a password?'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(builder: (context) => ForgottenPassword()),
-                );
-              },
-            ),
-          ],
+    return Container(
+      color: Color(0xFFFFD068),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            spacing: 16,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              PlatformTextFormField(
+                hintText: 'Email',
+                onChanged: (value) =>
+                ref.read(emailProvider.notifier).state = value,
+              ),
+              PlatformTextFormField(
+                hintText: 'Password',
+                obscureText: true,
+                onChanged: (value) =>
+                ref.read(passwordProvider.notifier).state = value,
+              ),
+              PlatformElevatedButton(
+                child: Text('Login'),
+                onPressed: () {
+                  login();
+                },
+              ),
+              if (ref.watch(errorLogin)) Text('Invalid email or password'),
+              ProvidersOptions(),
+              PlatformElevatedButton(
+                child: Text('Forgotten a password?'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                        builder: (context) => ForgottenPassword()),
+                  );
+                },
+              ),
+              PlatformElevatedButton(
+                child: Text('Registration'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (context) => Create()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
-}
-
-class ForgottenPassword extends StatelessWidget {
-  const ForgottenPassword({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Forgotten Password'),
-      ),
-      child: Center(
-        child: Text('Forgotten Password Page'),
       ),
     );
   }

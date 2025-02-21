@@ -39,6 +39,8 @@ dependencies:
   supabase_flutter: ^2.8.3
   google_sign_in: ^6.2.2
   app_links: ^6.3.3
+  flutter_vector_icons: ^2.0.0
+  flutter_platform_widgets: ^7.0.1
 
 dev_dependencies:
   flutter_test:
