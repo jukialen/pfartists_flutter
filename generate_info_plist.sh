@@ -5,11 +5,6 @@ set -a
 source .env
 set +a
 
-# Debugging: Sprawdź, czy zmienne środowiskowe są załadowane
-echo "PRODUCT_NAME: $PRODUCT_NAME"
-echo "PRODUCT_BUNDLE_IDENTIFIER: $PRODUCT_BUNDLE_IDENTIFIER"
-echo "REVERSED_CLIENT_ID: $REVERSED_CLIENT_ID"
-
 # Generate Info.plist with environment variables
 cat <<EOF > ios/Runner/Info.plist
 <?xml version="1.0" encoding="UTF-8"?>
@@ -34,7 +29,6 @@ cat <<EOF > ios/Runner/Info.plist
             <key>CFBundleURLSchemes</key>
             <array>
                 <string>$REVERSED_CLIENT_ID</string>
-                <string>com.googleusercontent.apps.503121268891-58i3j2gt933cadbk3eig3jar0qqor54c</string>
             </array>
         </dict>
     </array>
